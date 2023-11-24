@@ -6,15 +6,19 @@ class ProductManager{
     }
     getProducts(){
         return this.products;
+
     }
 
-    static id = 0;
+    
 
     addProduct({ title, description, price, thumbnail, code, stock }) {
        
         const existingProduct = this.products.find(product => product.code === code);
+
         if (existingProduct) {
+
           throw new Error('El código del producto ya existe');
+
         }
         
         const id = this.generateUniqueId();
@@ -45,7 +49,7 @@ class ProductManager{
 const productManager = new ProductManager();
 console.log(productManager.getProducts());
 try {
-    // Agregar un nuevo producto
+   
     const newProduct = productManager.addProduct({
       title: 'producto prueba',
       description: 'Este es un producto prueba',
@@ -71,13 +75,13 @@ try {
     }
     
     try {
-      // Obtener producto por ID (debería devolver el producto agregado anteriormente)
+      
       const productId = productManager.getProducts()[0].id;
       const foundProduct = productManager.getProductById(productId);
       console.log('Producto encontrado por ID:', foundProduct);
     
-      // Intentar obtener un producto con un ID inexistente (debería arrojar un error)
+     
       productManager.getProductById('id_inexistente');
     } catch (error) {
-      console.error('Error al obtener producto por ID:', error.message);
+       console.error('Error al obtener producto por ID:', error.message);
     }
